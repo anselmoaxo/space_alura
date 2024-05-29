@@ -1,7 +1,12 @@
 from django.shortcuts import render
+from usuarios.forms import LoginForms
 
 def login(request):
-    return render(request, 'usuarios/login.html')
+    form = LoginForms()
+    contexto = {
+        'form': form
+    }
+    return render(request, 'usuarios/login.html', contexto)
 
     
 def cadastro(request):
