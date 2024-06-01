@@ -51,11 +51,32 @@ class CadastroForms(forms.Form):
                              required=True,
                              widget= forms.PasswordInput(attrs={"class": "form-control",
                                                                 "placeholder": "Digite sua senha novamente"}
-                                                         )
-                                                         )
+                                                         ))
+      
+      # valida se Nome Cadastro contém espaços                                               
+      def clean_nome_cadastro(self):
+        nome = self.cleaned_data.get("nome_cadastro")
+        if nome:
+            nome = nome.strip()
+            if " " in nome:
+                raise forms.ValidationError("*Espaços não são permitidos no campo Nome de Cadastro")
+            else:
+                return nome
+            
+       # valida senha são iguais para o cadastro     
+      def clean_password2(self):
+        senha1 = self.cleaned_data.get("password1")
+        senha2 = self.cleaned_data.get("password2")
+        if senha1 and senha2:
+            
+            if senha1 != senha2:
+                raise forms.ValidationError("*Erro , Senhas não coincidem")
+            else:
+                return senha2
     
 
-        
-    
+            
 
-    
+            
+            
+     
